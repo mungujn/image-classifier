@@ -8,10 +8,13 @@ model_loaded = False
 
 
 def loadModel():
-    global model
-    model = ResNet50(weights='imagenet')
     global model_loaded
     model_loaded = True
+    
+    if not model_loaded:
+        global model
+        model = ResNet50(weights='imagenet')
+        
 
 
 def predictImageClass(folder, image_file_name):

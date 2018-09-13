@@ -65,7 +65,7 @@ def startClassificationJob(job):
     job['number_of_files'] = number_of_files
     job['processed'] = 0
     job_id = job['id']
-    print(f'Job {job_id}: Classifying {number_of_files} files')
+    print(f'Job {job_id}: Classifying {number_of_files} files has started')
 
     for file in files:
         with timer(job):
@@ -74,7 +74,8 @@ def startClassificationJob(job):
                 if image_class in prediction:
                     functions.moveFile(
                         'all', f'{file}', f'{image_class}', f'{file}')
-    return job
+    job['complete'] = True
+    print(f'Job {job_id}: Classifying {number_of_files} files has completed')
 
 
 @contextlib.contextmanager
