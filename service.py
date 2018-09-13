@@ -12,7 +12,9 @@ jobs = {}
 
 @app.route('/classification-job', methods=['POST'])
 def classificationJob():
-    """handler for the /classification-job endpoint
+    """Handler for the /classification-job POST endpoint \n
+    Creates and starts a classification job. \n
+    Returns the job data immediately and classification continues in a background thread.
     """
     try:
         if request.is_json:
@@ -39,7 +41,9 @@ def classificationJob():
 
 @app.route('/classification-job/<job_id>', methods=['GET'])
 def checkClassificationJobStatus(job_id):
-    """handler for checking the status of a classification job"""
+    """Handler for checking the status of a classification job \n
+    Responds with the data for the specified job
+    """
     try:
         try:
             job = jobs[job_id]

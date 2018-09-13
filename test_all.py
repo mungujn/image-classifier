@@ -8,7 +8,6 @@ client = app.test_client()
 skip = pytest.mark.skip(reason='fixing other tests')
 
 
-@skip
 def test_postClassificationJob():
     """test add new classification job
     """
@@ -20,7 +19,6 @@ def test_postClassificationJob():
     assert data['complete'] == False
 
 
-@skip
 def test_getClassificatioJob():
     """Test get classifcation job
     """
@@ -35,8 +33,8 @@ def test_predictImageClass():
     import classifier
     prediction = classifier.predictImageClass(
         '', 'test-classification.jpg')
-    print(prediction)
-
+    
+    assert prediction == 'Egyptian_cat'
 
 def test_getFileNames():
     """test getting local filenames
