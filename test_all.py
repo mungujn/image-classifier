@@ -5,7 +5,7 @@ from service import app
 import os
 app.testing = True
 client = app.test_client()
-skip = pytest.mark.skip(reason='fixing other tests')
+# skip = pytest.mark.skip(reason='fixing other tests')
 
 
 def test_postClassificationJob():
@@ -31,10 +31,12 @@ def test_getClassificatioJob():
 
 def test_predictImageClass():
     import classifier
+    classifier.loadModel()
     prediction = classifier.predictImageClass(
         '', 'test-classification.jpg')
-    
-    assert prediction == 'Egyptian_cat'
+
+    assert 'Egyptian_cat' in prediction
+
 
 def test_getFileNames():
     """test getting local filenames
