@@ -4,7 +4,6 @@ python:
 install:
     - pip install -r requirements.txt
 script:
-    - pytest
     - coverage run test_all.py
 after_success:
     - codecov
