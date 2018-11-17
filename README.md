@@ -1,4 +1,6 @@
-# Classifier Service
+# Image Classifier Service
+
+[![Build Status](https://travis-ci.com/mungujn/image-classifier.svg?branch=master)](https://travis-ci.com/mungujn/image-classifier)
 
 ## Overview
 
