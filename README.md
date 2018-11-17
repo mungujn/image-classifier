@@ -1,6 +1,7 @@
 # Image Classifier Service
 
 [![Build Status](https://travis-ci.com/mungujn/image-classifier.svg?branch=master)](https://travis-ci.com/mungujn/image-classifier)
+[![codecov](https://codecov.io/gh/mungujn/image-classifier/branch/master/graph/badge.svg)](https://codecov.io/gh/mungujn/image-classifier)
 
 ## Overview
 

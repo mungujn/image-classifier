@@ -15,7 +15,6 @@ jobs = {}
 
 
 @auth.authenticate
-@app.route('/classification-job', methods=['POST'])
 def classificationJob():
     '''Handler for the /classification-job POST endpoint \n
     Creates and starts a classification job. \n
@@ -47,7 +46,7 @@ def classificationJob():
         return responses.respondInternalServerError(error)
 
 
-@app.route('/classification-job/<job_id>', methods=['GET'])
+@auth.authenticate
 def checkClassificationJobStatus(job_id):
     '''Handler for checking the status of a classification job \n
     Responds with the data for the specified job
@@ -59,7 +58,7 @@ def checkClassificationJobStatus(job_id):
             job = jobs[job_id]
             return responses.respondOk(job)
         except KeyError as error:
-            print('Jobs:', jobs)
+            log.error('Jobs:', jobs)
             return responses.respondBadRequest(f'Job {job_id} not found')
     except Exception as error:
         log.error('Error:', type(error))
@@ -111,6 +110,11 @@ def timer(job):
         # job_id = job['id']
         # print(f'Job {job_id} is {percentage} percent complete')
 
+
+app.add_url_rule('/classification-job', methods=['POST'],
+                 endpoint='classification-job', view_func=classificationJob)
+app.add_url_rule('/classification-job/<job_id>', methods=['GET'],
+                 endpoint='/classification-job/<job_id>', view_func=checkClassificationJobStatus)
 
 if __name__ == '__main__':
     '''Run service.

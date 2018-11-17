@@ -1,7 +1,7 @@
 import os
 import functions
 import pytest
-from flask import json
+from flask import Flask, json
 from service import app
 app.testing = True
 client = app.test_client()
@@ -26,7 +26,8 @@ def test_getClassificatioJob():
     '''Test get classifcation job
     '''
     job_id = 256
-    r = client.get(f'/classification-job/{job_id}')
+    r = client.get(
+        f'/classification-job/{job_id}', headers={'Authorization': os.environ['SERVICE_KEY']})
     data = json.loads(r.data)
     print(data)
     assert data['message'] == f'Job {job_id} not found'
@@ -72,3 +73,22 @@ def writeBackFile():
 
 
 # test_moveFile()
+
+
+def test_common():
+    '''test general files to improve coverage
+    Simply run to make sure they dont crash the application
+    '''
+    from common import logger, responses
+    logger.obj('string')
+
+    app = Flask(__name__)
+
+    with app.app_context():
+        responses.respondInternalServerError()
+        responses.respondOk('string')
+        responses.respondUnauthorized('string')
+        responses.respondWithData({'key': 'value'})
+
+
+test_common()

@@ -64,15 +64,3 @@ def error(message, error=None):
     if error is not None:
         print(type(error))
         print(error)
-
-
-def getPrefix():
-    '''gets the current logger prefix'''
-    global prefix
-    return prefix
-
-
-def setPrefix(new_prefix):
-    '''sets the current logger prefix'''
-    global prefix
-    prefix = new_prefix

@@ -20,6 +20,6 @@ def authenticate(f):
         else:
             if service_key != os.environ['SERVICE_KEY']:
                 return responses.respondUnauthorized('Incorrect service key')
-
-        return f(*args, **kwargs)
+            else:
+                return f(*args, **kwargs)
     return decoratedFunction
