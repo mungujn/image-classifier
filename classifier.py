@@ -21,8 +21,8 @@ def loadModel():
 
 
 def predictImageClass(folder, image_file_name):
-    """Returns a string with the top five most likely classes of an image
-    """
+    '''Returns a string with the top five most likely classes of an image
+    '''
     global model
     path = os.path.join('..', 'files', folder, image_file_name)
 

@@ -5,7 +5,7 @@ base_path = join('..', 'files')
 
 
 def getFileNames(folder_name):
-    """Get names of files in a local folder"""
+    '''Get names of files in a local folder'''
     path = join(base_path, folder_name)
     file_names = []
     for file in os.listdir(path):
@@ -15,9 +15,9 @@ def getFileNames(folder_name):
 
 
 def moveFile(source_folder, source_filename, destination_folder, destination_file_name):
-    """move a file from the source_folder + source_filename to 
+    '''move a file from the source_folder + source_filename to 
     destination_folder + destination_file_name
-    """
+    '''
     source_path = join(base_path, source_folder, source_filename)
     with open(source_path, 'rb') as f:
         data = f.read()

@@ -13,10 +13,10 @@ jobs = {}
 
 @app.route('/classification-job', methods=['POST'])
 def classificationJob():
-    """Handler for the /classification-job POST endpoint \n
+    '''Handler for the /classification-job POST endpoint \n
     Creates and starts a classification job. \n
     Returns the job data immediately and classification continues in a background thread.
-    """
+    '''
     try:
         if request.is_json:
             json_data = request.get_json()
@@ -43,9 +43,9 @@ def classificationJob():
 
 @app.route('/classification-job/<job_id>', methods=['GET'])
 def checkClassificationJobStatus(job_id):
-    """Handler for checking the status of a classification job \n
+    '''Handler for checking the status of a classification job \n
     Responds with the data for the specified job
-    """
+    '''
     try:
         try:
             job = jobs[job_id]
@@ -59,8 +59,8 @@ def checkClassificationJobStatus(job_id):
 
 
 def startClassificationJob(job):
-    """classify images in a folder
-    """
+    '''classify images in a folder
+    '''
     try:
         classes = job['classes']
         files = functions.getFileNames('../files/all')
@@ -89,7 +89,7 @@ def startClassificationJob(job):
 
 @contextlib.contextmanager
 def timer(job):
-    """Context manager to keep track of a jobs status"""
+    '''Context manager to keep track of a jobs status'''
     try:
         yield
     finally:
@@ -103,10 +103,9 @@ def timer(job):
 
 
 if __name__ == '__main__':
-    """Run service.
-    For test purposes only. When deploying a webserver process and a more scalable 
-    model serving set up is better
-    """
+    '''Run service.
+    For test purposes only. When deploying use something like gunicorn to serve the app
+    '''
     print('\n****loading-classification-model****')
     classifier.loadModel()
     print('****classification-model-loaded****')
