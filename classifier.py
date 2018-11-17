@@ -4,8 +4,10 @@ from keras.applications.resnet50 import preprocess_input, decode_predictions
 import tensorflow as tf
 import numpy as np
 import os
+import common.logger as log
 model = None
 model_loaded = False
+working_dir = 'files'
 
 
 def loadModel():
@@ -24,7 +26,7 @@ def predictImageClass(folder, image_file_name):
     '''Returns a string with the top five most likely classes of an image
     '''
     global model
-    path = os.path.join('..', 'files', folder, image_file_name)
+    path = os.path.join(working_dir, folder, image_file_name)
 
     img = image.load_img(path, target_size=(224, 224))
     x = image.img_to_array(img)

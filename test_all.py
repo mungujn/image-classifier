@@ -1,32 +1,37 @@
+import os
 import functions
 import pytest
 from flask import json
 from service import app
-import os
 app.testing = True
 client = app.test_client()
 # skip = pytest.mark.skip(reason='fixing other tests')
 
 
 def test_postClassificationJob():
-    """test add new classification job
-    """
+    '''test add new classification job
+    '''
     r = client.post('/classification-job', json={
         'classes': ['cat', 'dog', 'car']
-    })
+    }, headers={'Authorization': os.environ['SERVICE_KEY']})
     data = json.loads(r.data)
     print(data)
     assert data['complete'] == False
 
 
+# test_postClassificationJob()
+
+
 def test_getClassificatioJob():
-    """Test get classifcation job
-    """
+    '''Test get classifcation job
+    '''
     job_id = 256
     r = client.get(f'/classification-job/{job_id}')
     data = json.loads(r.data)
     print(data)
     assert data['message'] == f'Job {job_id} not found'
+
+# test_getClassificatioJob()
 
 
 def test_predictImageClass():
@@ -37,26 +42,33 @@ def test_predictImageClass():
 
     assert 'Egyptian_cat' in prediction
 
+# test_predictImageClass()
+
 
 def test_getFileNames():
-    """test getting local filenames
-    """
+    '''test getting local filenames
+    '''
     files = functions.getFileNames('category-1')
     print(files)
     assert len(files) == 4
 
+# test_getFileNames()
+
 
 def test_moveFile():
-    """test moving files using a dummy 9 byte file
-    """
+    '''test moving files using a dummy 9 byte file
+    '''
     result = functions.moveFile('', 'test-move.txt', '', 'test-moved.txt')
     writeBackFile()
     assert result == 9
 
 
 def writeBackFile():
-    """writes back the moved test file to make sure the test works next time
-    """
-    path = os.path.join('..', 'files', 'test-move.txt')
+    '''writes back the moved test file to make sure the test works next time
+    '''
+    path = os.path.join('files', 'test-move.txt')
     with open(path, 'w') as f:
         f.write('123456789')
+
+
+test_moveFile()

@@ -1,16 +1,20 @@
+import os
+from common import auth, responses
 import functions
-import responses
 import random
 import threading
 import contextlib
 import classifier
 from flask import Flask, request
+import common.logger as log
+log.setUp()
 
 app = Flask(__name__)
 
 jobs = {}
 
 
+@auth.authenticate
 @app.route('/classification-job', methods=['POST'])
 def classificationJob():
     '''Handler for the /classification-job POST endpoint \n
@@ -18,6 +22,8 @@ def classificationJob():
     Returns the job data immediately and classification continues in a background thread.
     '''
     try:
+        log.start()
+        log.info('/classification-job'.center(20, '-'))
         if request.is_json:
             json_data = request.get_json()
 
@@ -37,7 +43,7 @@ def classificationJob():
         else:
             return responses.respondBadRequest('No categories defined')
     except Exception as error:
-        print('Error: ', error)
+        log.error('Error: ', error)
         return responses.respondInternalServerError(error)
 
 
@@ -47,6 +53,8 @@ def checkClassificationJobStatus(job_id):
     Responds with the data for the specified job
     '''
     try:
+        log.start()
+        log.info(f'/classification-job/{job_id}')
         try:
             job = jobs[job_id]
             return responses.respondOk(job)
@@ -54,7 +62,7 @@ def checkClassificationJobStatus(job_id):
             print('Jobs:', jobs)
             return responses.respondBadRequest(f'Job {job_id} not found')
     except Exception as error:
-        print('Error:', type(error))
+        log.error('Error:', type(error))
         return responses.respondInternalServerError(error)
 
 
@@ -63,12 +71,13 @@ def startClassificationJob(job):
     '''
     try:
         classes = job['classes']
-        files = functions.getFileNames('../files/all')
+        files = functions.getFileNames('all')
         number_of_files = len(files)
         job['number_of_files'] = number_of_files
         job['processed'] = 0
         job_id = job['id']
-        print(f'Job {job_id}: Classifying {number_of_files} files has started')
+        log.info(
+            f'Job {job_id}: Classifying {number_of_files} files has started')
 
         for file in files:
             with timer(job):
@@ -78,13 +87,14 @@ def startClassificationJob(job):
                         functions.moveFile(
                             'all', f'{file}', f'{image_class}', f'{file}')
         job['complete'] = True
-        print(f'Job {job_id}: Classifying {number_of_files} files has completed')
+        log.info(
+            f'Job {job_id}: Classifying {number_of_files} files has completed')
     except Exception as error:
-        print('****error-message****')
+        log.info('****error-message****')
         job['complete'] = True
-        print(f'Job {job_id}: Classifying {number_of_files} files has failed')
-        print(error)
-        print('****end-of-error-message****')
+        log.error(
+            f'Job {job_id}: Classifying {number_of_files} files has failed', error=error)
+        log.info('****end-of-error-message****')
 
 
 @contextlib.contextmanager

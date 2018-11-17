@@ -2,3 +2,6 @@ tensorflow
 keras
 flask
 pytest
+python-dotenv
+codecov
+pytest-cov
