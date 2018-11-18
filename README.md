@@ -1,6 +1,7 @@
 # Image Classifier Service
 
 [![Build Status](https://travis-ci.com/mungujn/image-classifier.svg?branch=master)](https://travis-ci.com/mungujn/image-classifier)
+
 [![codecov](https://codecov.io/gh/mungujn/image-classifier/branch/master/graph/badge.svg)](https://codecov.io/gh/mungujn/image-classifier)
 
 ## Overview
@@ -12,11 +13,11 @@ At the end of the classification job, the working directory will have two extra 
 The service exposes two endpoints;
 
 1. POST '/classification-job'
-    This endpoint takes a JSON object with an array of classes that images in the 'all' folder will be classified by.
-    It returns a JSON object with data on the started classification jobs, including the job ids.
+   This endpoint takes a JSON object with an array of classes that images in the 'all' folder will be classified by.
+   It returns a JSON object with data on the started classification jobs, including the job ids.
 2. GET '/classification-job/job-id'
-    This endpoint is used for checking on the status of a classification job.
-    It returns a JSON object that has details on how many images have been classified so far and how many are left.
+   This endpoint is used for checking on the status of a classification job.
+   It returns a JSON object that has details on how many images have been classified so far and how many are left.
 
 ## Files
 
@@ -31,3 +32,5 @@ The service exposes two endpoints;
 5. test_all.py
    Contains unit tests for all functions in the classifier.py and functions.py code files. Also contains tests of the two HTTP defined in service.py file.
    To run the tests install pytest then run 'pytest -v'
+
+This service functions independently, but I built it to work in tandem with the downloader/uploader service available [here](https://github.com/mungujn/downloader-uploader). This classifier and the downloader/uploader can be combined and used as a cloud storage image classification system, such as [this](https://github.com/mungujn/image-classification-system).
