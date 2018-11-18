@@ -88,7 +88,6 @@ def test_common():
         responses.respondInternalServerError()
         responses.respondOk('string')
         responses.respondUnauthorized('string')
-        responses.respondWithData({'key': 'value'})
 
 
-test_common()
+# test_common()

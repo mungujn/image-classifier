@@ -7,7 +7,7 @@ def respondInternalServerError(message='Internal server error', error=None):
     log.info('Responding internal server error')
     log.info('*'.center(20, '-'))
     if error is not None:
-        print(error)
+        log.error(error)
     return (jsonify({
         'code': 500,
         'message': message

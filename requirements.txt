@@ -6,3 +6,4 @@ python-dotenv
 codecov
 pytest-cov
 pillow
+gunicorn

@@ -56,7 +56,7 @@ def checkClassificationJobStatus(job_id):
         log.info(f'/classification-job/{job_id}')
         try:
             job = jobs[job_id]
-            return responses.respondOk(job)
+            return responses.respondWithData(job)
         except KeyError as error:
             log.error('Jobs:', jobs)
             return responses.respondBadRequest(f'Job {job_id} not found')
